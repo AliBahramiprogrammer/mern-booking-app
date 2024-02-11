@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import multer from "multer";
+import { HotelType } from './../shared/types';
 import cloudinary from "cloudinary";
-import { HotelType } from "../models/hotel";
 import Hotel from "../models/hotel";
 import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
@@ -46,7 +46,7 @@ router.post(
                 let dataURI = "data:" + image.mimetype + ";base64," + b64;
                 const res = await cloudinary.v2.uploader.upload(dataURI);
                 return res.url;
-            })
+            });
 
             const imageUrls = await Promise.all(uploadPromises);
             newHotel.imageUrls = imageUrls;
@@ -60,12 +60,21 @@ router.post(
 
             // 4. return a 201 status
             res.status(201).send(hotel);
-            
         } catch (error) {
             console.log("Error creating hotel: ");
             res.status(500).json({ message: "Something went wrong" });
         }
     }
 );
+
+router.get("/", verifyToken, async (req: Request, res: Response) => {    
+    try {
+        const hotels = await Hotel.find({ userId: req.userId });
+        res.json(hotels); 
+    } catch (error) {
+        
+    }
+
+});
 
 export default router;
