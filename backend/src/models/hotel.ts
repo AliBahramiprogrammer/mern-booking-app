@@ -11,7 +11,7 @@ const hotlelSchema = new mongoose.Schema({
     adultCount: { type: String, required: true },
     childCount: { type: String, required: true },
     facilities: [{ type: String, required: true }],
-    pricePerNight: { type: String, required: true },
+    pricePerNight: { type: Number, required: true },
     starRating: { type: String, required: true, min: 1, max: 5 },
     imageUrls: [{ type: String, required: true }],
     lastUpdated: {type:Date , required : true}
