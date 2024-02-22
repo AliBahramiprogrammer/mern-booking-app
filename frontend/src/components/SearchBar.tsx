@@ -30,6 +30,7 @@ const SearchBar = () => {
     const minDate = new Date();
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() + 1);
+    
     return (
         <form
             onSubmit={handleSubmit}
